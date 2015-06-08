@@ -260,8 +260,17 @@ exports.addNamePrompt = function(that,prompts,type){
         prompts.splice(0,0,{
             name:'name',
             message: 'Enter a name for the ' + type + '.',
-            validate: function(input){
-                return true;
+            validate: function(input) {
+                var valid = false;
+                switch (type) {
+                    case 'directive':  //https://github.com/angular/angular.js/commit/634e467172efa696eb32ef8942ffbedeecbd030e
+                        valid = (input === input.trim()) && (input[0].toLowerCase() === input[0]);
+                        break;
+                    default:
+                        valid = true; 
+                }
+
+                return valid;
             }
         });
     }
